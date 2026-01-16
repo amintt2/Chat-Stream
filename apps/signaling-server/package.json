@@ -1,0 +1,19 @@
+{
+  "name": "signaling-server",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "build": "tsc",
+    "start": "node dist/index.js"
+  },
+  "dependencies": {
+    "@p2p-stream/types": "workspace:*",
+    "socket.io": "^4.7.0",
+    "cors": "^2.8.5"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.17",
+    "tsx": "^4.7.0",
+    "typescript": "^5.4.0"
+  }
+}

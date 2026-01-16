@@ -1,0 +1,14 @@
+{
+  "name": "@p2p-stream/p2p-core",
+  "version": "0.0.1",
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "dependencies": {
+    "@p2p-stream/types": "workspace:*",
+    "simple-peer": "^9.11.1",
+    "events": "^3.3.0"
+  },
+  "devDependencies": {
+    "@types/simple-peer": "^9.11.8"
+  }
+}
