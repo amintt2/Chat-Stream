@@ -1,6 +1,7 @@
 'use client';
 
 import { useP2PViewer } from '@/hooks/use-p2p-viewer';
+import { VideoPerformanceMonitor } from './video-performance-monitor';
 
 interface VideoPlayerProps {
   streamId: string;
@@ -46,6 +47,9 @@ export function VideoPlayer({ streamId }: VideoPlayerProps) {
             </button>
           </div>
         )}
+
+        {/* Video Performance Monitor */}
+        <VideoPerformanceMonitor videoRef={videoRef} isPlaying={isPlaying} />
 
         {/* Buffer indicator */}
         {isPlaying && (

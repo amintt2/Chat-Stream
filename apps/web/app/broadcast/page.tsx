@@ -1,14 +1,30 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { Broadcaster } from '@/components/broadcaster';
 import { PeerStats } from '@/components/peer-stats';
 
 export default function BroadcastPage() {
-  const [streamId] = useState(() => uuidv4());
+  const [streamId, setStreamId] = useState<string | null>(null);
   const [isLive, setIsLive] = useState(false);
   const [viewerCount, setViewerCount] = useState(0);
+
+  // Generate UUID only on client to avoid hydration mismatch
+  useEffect(() => {
+    setStreamId(uuidv4());
+  }, []);
+
+  // Show loading state until streamId is generated
+  if (!streamId) {
+    return (
+      <main className="container mx-auto px-4 py-8">
+        <div className="flex items-center justify-center h-64">
+          <div className="text-gray-400">Initializing stream...</div>
+        </div>
+      </main>
+    );
+  }
 
   return (
     <main className="container mx-auto px-4 py-8">
@@ -40,7 +56,7 @@ export default function BroadcastPage() {
         <div className="mt-6 p-4 bg-gray-800 rounded-lg">
           <p className="text-gray-400 mb-2">Stream URL (share with viewers):</p>
           <code className="bg-gray-900 px-3 py-2 rounded block">
-            {typeof window !== 'undefined' ? `${window.location.origin}/watch/${streamId}` : ''}
+            {`${window.location.origin}/watch/${streamId}`}
           </code>
         </div>
       )}

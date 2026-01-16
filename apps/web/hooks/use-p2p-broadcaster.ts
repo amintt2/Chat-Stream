@@ -6,7 +6,11 @@ import { MeshNetwork, ChunkManager } from '@p2p-stream/p2p-core';
 import { useSignaling } from './use-signaling';
 
 export function useP2PBroadcaster(streamId: string) {
-  const peerId = useRef(uuidv4()).current;
+  // Generate peerId only on client to avoid hydration mismatch
+  const [peerId] = useState(() => {
+    if (typeof window === 'undefined') return '';
+    return uuidv4();
+  });
   const [isLive, setIsLive] = useState(false);
   const [viewerCount, setViewerCount] = useState(0);
   const [error, setError] = useState<string | null>(null);

@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef, useState, useCallback } from 'react';
+import { useEffect, useRef, useState, useCallback, useMemo } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { MeshNetwork, BufferManager } from '@p2p-stream/p2p-core';
 import { useSignaling } from './use-signaling';
@@ -13,7 +13,11 @@ interface BufferHealth {
 }
 
 export function useP2PViewer(streamId: string) {
-  const peerId = useRef(uuidv4()).current;
+  // Generate peerId only on client to avoid hydration mismatch
+  const [peerId] = useState(() => {
+    if (typeof window === 'undefined') return '';
+    return uuidv4();
+  });
   const [isPlaying, setIsPlaying] = useState(false);
   const [bufferHealth, setBufferHealth] = useState(0);
   const [peerCount, setPeerCount] = useState(0);
